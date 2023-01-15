@@ -2,33 +2,33 @@ using System.Xml;
 
 namespace MoneyCoin
 {
-    public class ExchangeOperations
-    {
-        public static readonly Dictionary<string, decimal> ExchangeRateToEuro = new();
-        public static List<string> FromCurrency = new();
-        public static List<string> ToCurrency = new();
-
-        public static void LoadRates()
-        {
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml");
-
-            foreach (XmlNode node in xmlDoc.DocumentElement.ChildNodes[2].ChildNodes[0].ChildNodes)
-            {
-                ExchangeRateToEuro.Add(node.Attributes["currency"].Value, decimal.Parse(node.Attributes["rate"].Value));
-                FromCurrency.Add(node.Attributes["currency"].Value);
-                ToCurrency.Add(node.Attributes["currency"].Value);
-            }
-        }
-    }
-
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
             ExchangeOperations.LoadRates();
+        }
+
+        public class ExchangeOperations
+        {
+            public static readonly Dictionary<string, decimal> ExchangeRateToEuro = new();
+            public static List<string> FromCurrency = new();
+            public static List<string> ToCurrency = new();
+
+            public static void LoadRates()
+            {
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load("http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml");
+
+                foreach (XmlNode node in xmlDoc.DocumentElement.ChildNodes[2].ChildNodes[0].ChildNodes)
+                {
+                    ExchangeRateToEuro.Add(node.Attributes["currency"].Value, decimal.Parse(node.Attributes["rate"].Value));
+                    FromCurrency.Add(node.Attributes["currency"].Value);
+                    ToCurrency.Add(node.Attributes["currency"].Value);
+                }
+            }
         }
 
         class var
